@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { IUserSchemaProp } from '../../types/user.types';
 
 export type UserDocument = User & Document;
 
@@ -25,4 +26,4 @@ export class User {
   isActive: boolean;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const UserSchema = SchemaFactory.createForClass<IUserSchemaProp>(User);

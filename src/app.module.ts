@@ -2,17 +2,12 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './database/user.schema';
-
-const url =
-  process.env.MONGO_URI ||
-  `mongodb+srv://hibana_main:Zaxscd1212@clusterprojectlang.jt1vg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+import { UserModule } from './user/user.module';
+import { ActiveUserModule } from './active-user/active-user.module';
+import { config } from './config/default';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot(url),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-  ],
+  imports: [MongooseModule.forRoot(config.uri), UserModule, ActiveUserModule],
   controllers: [AppController],
   providers: [AppService],
 })

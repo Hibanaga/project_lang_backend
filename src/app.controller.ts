@@ -9,4 +9,18 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('/items')
+  getItems(): any {
+    return [
+      {
+        id: 1,
+        name: 'vlad',
+      },
+      {
+        id: 2,
+        name: 'vadim',
+      },
+    ];
+  }
 }

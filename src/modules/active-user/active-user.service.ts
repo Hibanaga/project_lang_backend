@@ -1,5 +1,5 @@
 import { ActiveUser, ActiveUserDocument } from './model/active-user.schema';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -14,7 +14,23 @@ export class ActiveUserService {
     return await this.activeUserModel.find({});
   }
 
+  async get(query: { clientID: string }): Promise<ActiveUser> {
+    try {
+      return await this.activeUserModel.findOne(query);
+    } catch (error) {
+      throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+
   async create(data): Promise<ActiveUser> {
-    return await this.activeUserModel.create(data);
+    try {
+      const activeUser = await this.activeUserModel.findOne({
+        clientID: data.clientID,
+      });
+      if (activeUser) throw new Error();
+      return await this.activeUserModel.create(data);
+    } catch (error) {
+      throw new HttpException('User already exists', HttpStatus.FORBIDDEN);
+    }
   }
 }

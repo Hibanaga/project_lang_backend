@@ -11,16 +11,22 @@ export class ActiveUser {
   })
   clientID: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   coin: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   crown: string;
 
   @Prop()
   progress: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   progressStory: string[];
 }
 

@@ -19,7 +19,6 @@ export class UserController {
       isActive: false,
       code: random(1111, 9999),
     };
-    console.log(defaultUser);
     return this._userService.create(defaultUser);
   }
 

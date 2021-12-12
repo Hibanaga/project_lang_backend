@@ -18,7 +18,6 @@ export class ActiveUserController {
 
   @Post()
   post(@Body() request): Promise<ActiveUser> {
-    console.log(request);
     return this._activeUserService.create(request);
   }
 }

@@ -1,10 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import {
-  IPropgressStoryProp,
-  IProgressProp,
-  IActiveUserProps,
-} from '../../types/active-user.types';
+import { IActiveUserProps } from '../../../types/active-user.types';
 
 export type ActiveUserDocument = ActiveUser & Document;
 
@@ -25,7 +21,8 @@ export class ActiveUser {
   progress: string;
 
   @Prop()
-  progressStory: string;
+  progressStory: string[];
 }
 
-export const ActiveUserSchema = SchemaFactory.createForClass(ActiveUser);
+export const ActiveUserSchema =
+  SchemaFactory.createForClass<IActiveUserProps>(ActiveUser);

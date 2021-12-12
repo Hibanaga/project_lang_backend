@@ -24,6 +24,9 @@ export class User {
 
   @Prop()
   isActive: boolean;
+
+  @Prop()
+  code: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass<IUserSchemaProp>(User);

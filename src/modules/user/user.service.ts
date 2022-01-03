@@ -26,7 +26,7 @@ export class UserService {
   async update(query): Promise<User> {
     try {
       const user = await this.userModel.exists({
-        clientID: query.clientID,
+        email: query.email,
       });
       if (!user) throw { message: 'userError' };
       const errorCode = await this.userModel.findOne({ code: query.code });

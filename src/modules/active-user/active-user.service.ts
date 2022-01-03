@@ -14,6 +14,20 @@ export class ActiveUserService {
     return await this.activeUserModel.find({});
   }
 
+  async getLogin(query: any) {
+    try {
+      const isExistNickName = await this.activeUserModel.exists({
+        email: query.email,
+        password: query.password,
+        isActive: true,
+      });
+      if (!isExistNickName) throw new Error();
+      return await this.activeUserModel.findOne({ email: query.email });
+    } catch (error) {
+      throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+
   async get(query: { clientID: string }): Promise<ActiveUser> {
     try {
       return await this.activeUserModel.findOne(query);
@@ -31,6 +45,19 @@ export class ActiveUserService {
       return await this.activeUserModel.create(data);
     } catch (error) {
       throw new HttpException('User already exists', HttpStatus.FORBIDDEN);
+    }
+  }
+
+  async put(data): Promise<ActiveUser> {
+    try {
+      const { clientID, crown, coin, progress } = data;
+      await this.activeUserModel.findOneAndUpdate(
+        { clientID: clientID },
+        { crown: crown, coin: coin, progress: progress },
+      );
+      return await this.activeUserModel.findOne({ clientID: clientID });
+    } catch (error) {
+      throw new HttpException('Error Update', HttpStatus.FORBIDDEN);
     }
   }
 }

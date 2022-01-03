@@ -14,6 +14,7 @@ export class UserController {
 
   @Post()
   post(@Body() request): Promise<User> {
+    console.log(request);
     const defaultUser = {
       ...request,
       isActive: false,

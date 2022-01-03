@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
 import { ActiveUserService } from './active-user.service';
 import { ActiveUser } from './model/active-user.schema';
 
@@ -11,6 +11,11 @@ export class ActiveUserController {
     return this._activeUserService.getAll();
   }
 
+  @Get('login')
+  getLogin(@Query() query: any): Promise<ActiveUser> {
+    return this._activeUserService.getLogin(query);
+  }
+
   @Get()
   get(@Query() query): Promise<ActiveUser> {
     return this._activeUserService.get(query);
@@ -19,5 +24,10 @@ export class ActiveUserController {
   @Post()
   post(@Body() request): Promise<ActiveUser> {
     return this._activeUserService.create(request);
+  }
+
+  @Put()
+  put(@Body() request): Promise<ActiveUser> {
+    return this._activeUserService.put(request);
   }
 }

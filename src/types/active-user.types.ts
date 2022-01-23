@@ -4,4 +4,5 @@ export interface IActiveUserProps {
   crown: string;
   progress: string;
   progressStory: string[];
+  images: string[];
 }

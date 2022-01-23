@@ -60,4 +60,35 @@ export class ActiveUserService {
       throw new HttpException('Error Update', HttpStatus.FORBIDDEN);
     }
   }
+
+  async putStory(data): Promise<any> {
+    try {
+      const { clientID, progress } = data;
+
+      await this.activeUserModel.findOneAndUpdate(
+        { clientID: clientID },
+        {
+          $push: { progressStory: progress },
+        },
+      );
+      return await this.activeUserModel.findOne({ clientID: clientID });
+    } catch (error) {
+      throw new HttpException('Error Update Story', HttpStatus.FORBIDDEN);
+    }
+  }
+
+  async putImages(data): Promise<any> {
+    try {
+      const { clientID, images, coin } = data;
+
+      await this.activeUserModel.updateOne(
+          { clientID: clientID },
+          { $addToSet: { images: { $each: images } } , coin:coin },
+        );
+
+      return await this.activeUserModel.findOne({ clientID: clientID });
+    } catch (error) {
+      throw new HttpException('Error update Images shop', HttpStatus.BAD_REQUEST);
+    }
+  }
 }

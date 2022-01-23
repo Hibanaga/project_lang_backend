@@ -30,4 +30,14 @@ export class ActiveUserController {
   put(@Body() request): Promise<ActiveUser> {
     return this._activeUserService.put(request);
   }
+
+  @Put('story')
+  putStory(@Body() request): Promise<ActiveUser> {
+    return this._activeUserService.putStory(request);
+  }
+
+  @Put('avatar')
+  putAvatars(@Body() request): Promise<ActiveUser> {
+    return this._activeUserService.putImages(request);
+  }
 }

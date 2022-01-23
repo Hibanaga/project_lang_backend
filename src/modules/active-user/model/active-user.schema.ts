@@ -22,6 +22,9 @@ export class ActiveUser {
 
   @Prop()
   progressStory: string[];
+
+  @Prop()
+  images: string[];
 }
 
 export const ActiveUserSchema =

@@ -63,12 +63,15 @@ export class ActiveUserService {
 
   async putStory(data): Promise<any> {
     try {
-      const { clientID, progress } = data;
+      const { clientID, currentTheme } = data;
+
+      console.log(clientID);
+      console.log(currentTheme);
 
       await this.activeUserModel.findOneAndUpdate(
         { clientID: clientID },
         {
-          $push: { progressStory: progress },
+          $push: { progressStory: currentTheme },
         },
       );
       return await this.activeUserModel.findOne({ clientID: clientID });

@@ -12,6 +12,15 @@ export class UserService {
     return await this.userModel.find({});
   }
 
+  async getMe(query):Promise<User> {
+   try {
+     const { _id} = await this.userModel.findOne({}, { clientID: query.clientID});
+     return await this.userModel.findById(_id)
+   } catch(error) {
+     throw new HttpException("User not exist", HttpStatus.FORBIDDEN )
+   }
+  }
+
   async create(data): Promise<User> {
     try {
       const isExist = await this.userModel.exists({ email: data.email });

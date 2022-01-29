@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { random } from 'lodash';
 import { User } from './model/user.schema';
@@ -10,6 +10,11 @@ export class UserController {
   @Get()
   getAll() {
     return this._userService.getAll();
+  }
+
+  @Get("me")
+  get(@Query() request): Promise<User> {
+    return this._userService.getMe(request);
   }
 
   @Post()

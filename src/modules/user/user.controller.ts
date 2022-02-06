@@ -12,6 +12,11 @@ export class UserController {
     return this._userService.getAll();
   }
 
+  @Get("clientID")
+  getDataByClientID(@Query() request):Promise<User> {
+    return this._userService.returClientID(request.email);
+  }
+
   @Get("me")
   get(@Query() request): Promise<User> {
     return this._userService.getMe(request);
@@ -19,7 +24,6 @@ export class UserController {
 
   @Post()
   post(@Body() request): Promise<User> {
-    console.log(request);
     const defaultUser = {
       ...request,
       isActive: false,

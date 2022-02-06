@@ -12,6 +12,14 @@ export class UserService {
     return await this.userModel.find({});
   }
 
+  async returClientID(query):Promise<User> {
+    try {
+      return await this.userModel.findOne({ email: query });
+    } catch(error) {
+      throw new HttpException("User not exist", HttpStatus.FORBIDDEN)
+    }
+  }
+
   async getMe(query):Promise<User> {
    try {
      const { _id} = await this.userModel.findOne({}, { clientID: query.clientID});
@@ -34,15 +42,8 @@ export class UserService {
 
   async update(query): Promise<User> {
     try {
-      const user = await this.userModel.exists({
-        email: query.email,
-      });
-      if (!user) throw { message: 'userError' };
-      const errorCode = await this.userModel.findOne({ code: query.code });
-      if (!errorCode) throw { message: 'codeError' };
-
-      await this.userModel.updateOne({ code: query.code }, { isActive: true });
-      const updatedUser = await this.userModel.findOne({ id: query.id });
+      await this.userModel.updateOne({ email: query.email,code: query.code }, { isActive: true });
+      const updatedUser = await this.userModel.findOne({ email: query.email });
       return updatedUser;
     } catch (error) {
       console.log(error);

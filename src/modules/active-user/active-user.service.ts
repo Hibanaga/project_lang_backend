@@ -1,7 +1,9 @@
+import { User, UserDocument } from './../user/model/user.schema';
 import { ActiveUser, ActiveUserDocument } from './model/active-user.schema';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+
 
 @Injectable()
 export class ActiveUserService {
@@ -15,6 +17,7 @@ export class ActiveUserService {
   }
 
   async getLogin(query: any) {
+    console.log(query);
     try {
       const isExistNickName = await this.activeUserModel.exists({
         email: query.email,
@@ -22,7 +25,8 @@ export class ActiveUserService {
         isActive: true,
       });
       if (!isExistNickName) throw new Error();
-      return await this.activeUserModel.findOne({ email: query.email });
+      const user = await this.activeUserModel.findOne({ clientID: query.clientID });
+      return user
     } catch (error) {
       throw new HttpException('User does not exist', HttpStatus.NOT_FOUND);
     }
@@ -64,10 +68,6 @@ export class ActiveUserService {
   async putStory(data): Promise<any> {
     try {
       const { clientID, currentTheme } = data;
-
-      console.log(clientID);
-      console.log(currentTheme);
-
       await this.activeUserModel.findOneAndUpdate(
         { clientID: clientID },
         {

@@ -5,8 +5,8 @@ export const sendMail = (mailToSend, code) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: config.creator_mail,
-      pass: config.creator_pass,
+      user: "coollearn.info@gmail.com",
+      pass: "Zaxscd1313",
     },
   });
 
